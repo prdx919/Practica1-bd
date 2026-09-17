@@ -1,0 +1,84 @@
+erDiagram
+    USUARIO ||--o{ PRESTAMO : "solicita"
+    PRESTAMO ||--|{ DETALLE_PRESTAMO : "contiene"
+    EJEMPLAR ||--o{ DETALLE_PRESTAMO : "se_incluye_en"
+    ITEM_CATALOGO ||--|{ EJEMPLAR : "posee"
+    ITEM_CATALOGO ||--o| LIBRO : "especializa_en"
+    ITEM_CATALOGO ||--o| EQUIPO_TECNOLOGICO : "especializa_en"
+    DETALLE_PRESTAMO ||--o| MULTA : "genera"
+
+    USUARIO {
+        int id_usuario PK
+        string identificador_institucional UK
+        string nombre
+        string apellido_paterno
+        string apellido_materno
+        string email UK
+        string telefono
+        string tipo_usuario
+        string estado_cuenta
+    }
+
+    ITEM_CATALOGO {
+        int id_item PK
+        string codigo_catalogo UK
+        string titulo
+        string clasificacion
+        string tipo_recurso
+        string descripcion
+    }
+
+    LIBRO {
+        int id_item PK,FK
+        string isbn UK
+        string editorial
+        int edicion
+        string autores
+    }
+
+    EQUIPO_TECNOLOGICO {
+        int id_item PK,FK
+        string marca
+        string modelo
+        string numero_serie UK
+        string especificaciones
+    }
+
+    EJEMPLAR {
+        int id_ejemplar PK
+        int id_item FK
+        string codigo_barras UK
+        string estado_fisico
+        string estado_disponibilidad
+        string ubicacion_estante
+        date fecha_adquisicion
+    }
+
+    PRESTAMO {
+        int id_prestamo PK
+        string folio UK
+        int id_usuario FK
+        timestamp fecha_prestamo
+        string estado_prestamo
+        string observaciones
+    }
+
+    DETALLE_PRESTAMO {
+        int id_detalle PK
+        int id_prestamo FK
+        int id_ejemplar FK
+        date fecha_devolucion_esperada
+        timestamp fecha_devolucion_real
+        string condicion_entrega
+        string condicion_devolucion
+    }
+
+    MULTA {
+        int id_multa PK
+        int id_detalle FK,UK
+        int dias_atraso
+        decimal monto_total
+        string estado_pago
+        timestamp fecha_generacion
+        timestamp fecha_pago
+    }

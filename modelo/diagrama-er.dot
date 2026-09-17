@@ -1,0 +1,145 @@
+digraph ERD {
+    graph [
+        label="Diagrama Entidad-Relación: Sistema de Registro y Control de Préstamos (SRCP)\nIngeniería en Inteligencia Artificial - IPN | Alumno: Cesar Javier Martinez Ruiz (2024630871)",
+        labelloc="t",
+        fontsize=16,
+        fontname="Helvetica-Bold",
+        rankdir="TB",
+        nodesep=0.7,
+        ranksep=0.9,
+        splines=ortho,
+        bgcolor="#FAFAFA"
+    ];
+
+    node [
+        shape=none,
+        fontname="Helvetica",
+        fontsize=11
+    ];
+
+    edge [
+        fontname="Helvetica",
+        fontsize=10,
+        color="#2C3E50",
+        penwidth=1.5
+    ];
+
+    // Entidad: USUARIO
+    USUARIO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#2980B9" colspan="3"><font color="#FFFFFF"><b>USUARIO</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_usuario</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">identificador_institucional</td><td align="left">VARCHAR(20)</td></tr>
+            <tr><td align="left"></td><td align="left">nombre</td><td align="left">VARCHAR(60)</td></tr>
+            <tr><td align="left"></td><td align="left">apellido_paterno</td><td align="left">VARCHAR(60)</td></tr>
+            <tr><td align="left"></td><td align="left">apellido_materno</td><td align="left">VARCHAR(60)</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">email</td><td align="left">VARCHAR(100)</td></tr>
+            <tr><td align="left"></td><td align="left">telefono</td><td align="left">VARCHAR(15)</td></tr>
+            <tr><td align="left"></td><td align="left">tipo_usuario</td><td align="left">ENUM</td></tr>
+            <tr><td align="left"></td><td align="left">estado_cuenta</td><td align="left">ENUM</td></tr>
+        </table>
+    >];
+
+    // Entidad Superclase: ITEM_CATALOGO
+    ITEM_CATALOGO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#8E44AD" colspan="3"><font color="#FFFFFF"><b>ITEM_CATALOGO (Superclase)</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_item</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">codigo_catalogo</td><td align="left">VARCHAR(30)</td></tr>
+            <tr><td align="left"></td><td align="left">titulo</td><td align="left">VARCHAR(150)</td></tr>
+            <tr><td align="left"></td><td align="left">clasificacion</td><td align="left">VARCHAR(50)</td></tr>
+            <tr><td align="left"></td><td align="left">tipo_recurso</td><td align="left">ENUM</td></tr>
+            <tr><td align="left"></td><td align="left">descripcion</td><td align="left">TEXT</td></tr>
+        </table>
+    >];
+
+    // Subclase: LIBRO
+    LIBRO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#9B59B6" colspan="3"><font color="#FFFFFF"><b>LIBRO (Subclase)</b></font></td></tr>
+            <tr><td align="left"><b>PK, FK</b></td><td align="left">id_item</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">isbn</td><td align="left">VARCHAR(20)</td></tr>
+            <tr><td align="left"></td><td align="left">editorial</td><td align="left">VARCHAR(80)</td></tr>
+            <tr><td align="left"></td><td align="left">edicion</td><td align="left">SMALLINT</td></tr>
+            <tr><td align="left"></td><td align="left">autores</td><td align="left">TEXT</td></tr>
+        </table>
+    >];
+
+    // Subclase: EQUIPO_TECNOLOGICO
+    EQUIPO_TECNOLOGICO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#9B59B6" colspan="3"><font color="#FFFFFF"><b>EQUIPO_TECNOLOGICO (Subclase)</b></font></td></tr>
+            <tr><td align="left"><b>PK, FK</b></td><td align="left">id_item</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"></td><td align="left">marca</td><td align="left">VARCHAR(50)</td></tr>
+            <tr><td align="left"></td><td align="left">modelo</td><td align="left">VARCHAR(50)</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">numero_serie</td><td align="left">VARCHAR(60)</td></tr>
+            <tr><td align="left"></td><td align="left">especificaciones</td><td align="left">TEXT</td></tr>
+        </table>
+    >];
+
+    // Entidad: EJEMPLAR
+    EJEMPLAR [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#16A085" colspan="3"><font color="#FFFFFF"><b>EJEMPLAR</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_ejemplar</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>FK</b></td><td align="left">id_item</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">codigo_barras</td><td align="left">VARCHAR(30)</td></tr>
+            <tr><td align="left"></td><td align="left">estado_fisico</td><td align="left">VARCHAR(50)</td></tr>
+            <tr><td align="left"></td><td align="left">estado_disponibilidad</td><td align="left">ENUM</td></tr>
+            <tr><td align="left"></td><td align="left">ubicacion_estante</td><td align="left">VARCHAR(30)</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_adquisicion</td><td align="left">DATE</td></tr>
+        </table>
+    >];
+
+    // Entidad: PRESTAMO
+    PRESTAMO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#D35400" colspan="3"><font color="#FFFFFF"><b>PRESTAMO</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_prestamo</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>UK</b></td><td align="left">folio</td><td align="left">VARCHAR(25)</td></tr>
+            <tr><td align="left"><b>FK</b></td><td align="left">id_usuario</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_prestamo</td><td align="left">TIMESTAMP</td></tr>
+            <tr><td align="left"></td><td align="left">estado_prestamo</td><td align="left">ENUM</td></tr>
+            <tr><td align="left"></td><td align="left">observaciones</td><td align="left">TEXT</td></tr>
+        </table>
+    >];
+
+    // Entidad Débil/Intermedia: DETALLE_PRESTAMO
+    DETALLE_PRESTAMO [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#C0392B" colspan="3"><font color="#FFFFFF"><b>DETALLE_PRESTAMO</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_detalle</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>FK</b></td><td align="left">id_prestamo</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"><b>FK</b></td><td align="left">id_ejemplar</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_devolucion_esperada</td><td align="left">DATE</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_devolucion_real</td><td align="left">TIMESTAMP</td></tr>
+            <tr><td align="left"></td><td align="left">condicion_entrega</td><td align="left">TEXT</td></tr>
+            <tr><td align="left"></td><td align="left">condicion_devolucion</td><td align="left">TEXT</td></tr>
+        </table>
+    >];
+
+    // Entidad: MULTA
+    MULTA [label=<
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF">
+            <tr><td bgcolor="#7F8C8D" colspan="3"><font color="#FFFFFF"><b>MULTA</b></font></td></tr>
+            <tr><td align="left"><b>PK</b></td><td align="left">id_multa</td><td align="left">SERIAL</td></tr>
+            <tr><td align="left"><b>UK, FK</b></td><td align="left">id_detalle</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"></td><td align="left">dias_atraso</td><td align="left">INTEGER</td></tr>
+            <tr><td align="left"></td><td align="left">monto_total</td><td align="left">NUMERIC(10,2)</td></tr>
+            <tr><td align="left"></td><td align="left">estado_pago</td><td align="left">ENUM</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_generacion</td><td align="left">TIMESTAMP</td></tr>
+            <tr><td align="left"></td><td align="left">fecha_pago</td><td align="left">TIMESTAMP</td></tr>
+        </table>
+    >];
+
+    // Relaciones de herencia (Generalización / Especialización)
+    ITEM_CATALOGO -> LIBRO [arrowhead="onormal", style=dashed, label="es_un"];
+    ITEM_CATALOGO -> EQUIPO_TECNOLOGICO [arrowhead="onormal", style=dashed, label="es_un"];
+
+    // Relaciones cardinales
+    ITEM_CATALOGO -> EJEMPLAR [arrowhead="crow", arrowtail="tee", dir="both", label="1 : N\n(posee)"];
+    USUARIO -> PRESTAMO [arrowhead="crow", arrowtail="tee", dir="both", label="1 : N\n(solicita)"];
+    PRESTAMO -> DETALLE_PRESTAMO [arrowhead="crow", arrowtail="tee", dir="both", label="1 : N\n(contiene)"];
+    EJEMPLAR -> DETALLE_PRESTAMO [arrowhead="crow", arrowtail="tee", dir="both", label="1 : N\n(se presta en)"];
+    DETALLE_PRESTAMO -> MULTA [arrowhead="tee", arrowtail="odot", dir="both", label="0..1 : 1\n(genera por mora)"];
+}
