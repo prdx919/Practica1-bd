@@ -1,0 +1,31 @@
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Entornos virtuales y Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+pdf_env/
+
+# Datos persistentes locales de Contenedores y Bases de Datos
+pgdata/
+.pgdata/
+*.log
+*.tmp
+*.bak
+
+# Variables de entorno con credenciales sensibles
+.env
+.env.local
+
+# Mantener carpetas de evidencias en Git
+!.gitkeep
